@@ -1,28 +1,9 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>커뮤니티 게시판 - 목록</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1>자유 게시판</h1>
-      <div class="auth-links">
-        <a href="index.html">홈</a>
-        <a href="login.html">로그인</a>
-        <a href="register.html">회원가입</a>
-        <a href="mypage.html">마이페이지</a>
-        <a href="admin_dashboard.html">관리자 페이지</a>
-        <a href="#">로그아웃</a>
-      </div>
-    </header>
-
-    <div class="admin-menu">
+     <div class="admin-menu">
       <strong>Master</strong>님 반갑습니다. (권한: 최고관리자)
     </div>
 
-    <div class="top-control">
+   
+   <div class="top-control">
       <div class="search-box">
         <select>
           <option>제목</option>
@@ -32,10 +13,9 @@
         <input type="text" placeholder="검색어를 입력하세요" />
         <button type="button">검색</button>
       </div>
-      <a href="write.html" class="btn-write">새 글 쓰기</a>
+      <a href="?page=write" class="btn-write">새 글 쓰기</a>
     </div>
-
-    <table>
+  <table>
       <thead>
         <tr>
           <th>번호</th>
@@ -48,7 +28,7 @@
         <tr>
           <td>10</td>
           <td class="title-column">
-            <a href="view.html">일반 게시글 예시입니다.</a>
+            <a href="?page=view">일반 게시글 예시입니다.</a>
           </td>
           <td>사용자C</td>
           <td>2024-05-21</td>
@@ -56,7 +36,7 @@
         <tr>
           <td>9</td>
           <td class="title-column">
-            <a href="view.html">일반 게시글 예시입니다.</a>
+            <a href="?page=view">일반 게시글 예시입니다.</a>
           </td>
           <td>사용자C</td>
           <td>2024-05-21</td>
@@ -64,7 +44,7 @@
         <tr>
           <td>8</td>
           <td class="title-column">
-            <a href="view.html">일반 게시글 예시입니다.</a>
+            <a href="?page=view">일반 게시글 예시입니다.</a>
           </td>
           <td>사용자C</td>
           <td>2024-05-21</td>
@@ -72,7 +52,7 @@
         <tr>
           <td>7</td>
           <td class="title-column">
-            <a href="view.html">일반 게시글 예시입니다.</a>
+            <a href="?page=view">일반 게시글 예시입니다.</a>
           </td>
           <td>사용자C</td>
           <td>2024-05-21</td>
@@ -80,7 +60,7 @@
         <tr>
           <td>6</td>
           <td class="title-column">
-            <a href="view.html">일반 게시글 예시입니다.</a>
+            <a href="?page=view">일반 게시글 예시입니다.</a>
           </td>
           <td>사용자C</td>
           <td>2024-05-21</td>
@@ -88,7 +68,7 @@
         <tr>
           <td>5</td>
           <td class="title-column">
-            <a href="view.html">일반 게시글 예시입니다.</a>
+            <a href="?page=view">일반 게시글 예시입니다.</a>
           </td>
           <td>사용자C</td>
           <td>2024-05-21</td>
@@ -96,7 +76,7 @@
         <tr>
           <td>4</td>
           <td class="title-column">
-            <a href="password.html">
+            <a href="password.php">
               <span class="secret-tag">[비밀글]</span> 문의사항 확인
               부탁드립니다.
             </a>
@@ -107,7 +87,7 @@
         <tr>
           <td>3</td>
           <td class="title-column">
-            <a href="view.html">오늘 점심 메뉴 추천받습니다.</a>
+            <a href="?page=view">오늘 점심 메뉴 추천받습니다.</a>
           </td>
           <td>작성자A</td>
           <td>2024-05-20</td>
@@ -115,7 +95,7 @@
         <tr>
           <td>2</td>
           <td class="title-column">
-            <a href="password.html">
+            <a href="password.php">
               <span class="secret-tag">[비밀글]</span> 개인적인 문의사항입니다.
             </a>
           </td>
@@ -125,7 +105,7 @@
         <tr>
           <td>1</td>
           <td class="title-column">
-            <a href="view.html">공지사항입니다. 필독해주세요.</a>
+            <a href="?page=view">공지사항입니다. 필독해주세요.</a>
           </td>
           <td>관리자</td>
           <td>2024-05-18</td>
@@ -142,5 +122,3 @@
       <a href="#">5</a>
       <a href="#">&raquo;</a>
     </div>
-  </body>
-</html>

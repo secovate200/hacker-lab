@@ -1,20 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>관리자 패널 - 유저 및 게시글 관리</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1><a href="index.html">자유 게시판</a></h1>
-      <div class="auth-links">
-        <a href="index.html">홈</a>
-        <a href="mypage.html">마이페이지</a>
-        <a href="master_panel.html">마스터 패널</a>
-        <a href="#">로그아웃</a>
-      </div>
-    </header>
+
 
     <main>
       <div class="tabs">
@@ -148,5 +132,4 @@
         evt.currentTarget.className += " active";
       }
     </script>
-  </body>
-</html>
+  

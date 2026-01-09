@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>커뮤니티 게시판 - 마이페이지</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1><a href="index.html">자유 게시판</a></h1>
-      <div class="auth-links">
-        <a href="index.html">홈</a>
-        <a href="mypage.html">마이페이지</a>
-        <a href="admin_dashboard.html">관리자 페이지</a>
-        <a href="#">로그아웃</a>
-      </div>
-    </header>
 
     <main>
       <div class="tabs">
@@ -127,5 +110,4 @@
         evt.currentTarget.className += " active";
       }
     </script>
-  </body>
-</html>
+ 
