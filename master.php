@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>커뮤니티 게시판 - 마스터 패널</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1><a href="index.html">자유 게시판</a></h1>
-      <div class="auth-links">
-        <a href="index.html">홈</a>
-        <a href="admin_dashboard.html">관리자 페이지</a>
-        <a href="mypage.html">마이페이지</a>
-        <a href="#">로그아웃</a>
-      </div>
-    </header>
 
     <div class="master-admin-menu">
       <strong>Master</strong> 권한으로 접속 중입니다. 사이트 전체 권한을 제어할
@@ -108,5 +91,3 @@
         <a href="#">&raquo;</a>
       </div>
     </main>
-  </body>
-</html>

@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>글쓰기 - 자유 게시판</title>
-    <link rel="stylesheet" href="style.css" />
-    <style></style>
-  </head>
-  <body>
-    <header>
-      <h1><a href="index.html">자유 게시판</a></h1>
-      <div class="auth-links">
-        <a href="index.html">홈</a>
-        <a href="mypage.html">마이페이지</a>
-        <a href="#">로그아웃</a>
-      </div>
-    </header>
 
     <main class="write-page-container">
       <form action="#" method="POST" enctype="multipart/form-data">
@@ -99,5 +82,3 @@
         </div>
       </form>
     </main>
-  </body>
-</html>

@@ -1,6 +1,7 @@
 /* =========================================
    1. 전역 초기화 및 공통 레이아웃
    ========================================= */
+
 body {
   width: 1000px;
   margin: 0 auto;
@@ -8,6 +9,7 @@ body {
   padding: 20px;
   color: #333;
   line-height: 1.5;
+  overflow-y: scroll;
 }
 
 header {

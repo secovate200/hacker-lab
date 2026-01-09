@@ -1,22 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>커뮤니티 게시판 - 로그인</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1><a href="index.html">자유 게시판</a></h1>
-      <div class="auth-links">
-        <a href="index.html">홈</a>
-        <a href="login.html">로그인</a>
-        <a href="register.html">회원가입</a>
-        <a href="mypage.html">마이페이지</a>
-        <a href="admin_dashboard.html">관리자 페이지</a>
-        <a href="#">로그아웃</a>
-      </div>
-    </header>
 
     <main class="login-container">
       <h2>로그인</h2>
@@ -46,9 +27,8 @@
       </form>
 
       <div class="login-footer">
-        <a href="register.html">회원가입</a> |
+        <a href="?page=register">회원가입</a> |
         <a href="#">아이디/비밀번호 찾기</a>
       </div>
     </main>
-  </body>
-</html>
+  
