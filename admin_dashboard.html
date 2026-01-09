@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>관리자 패널 - 유저 및 게시글 관리</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1><a href="index.html">자유 게시판</a></h1>
+      <div class="auth-links">
+        <a href="index.html">홈</a>
+        <a href="mypage.html">마이페이지</a>
+        <a href="master_panel.html">마스터 패널</a>
+        <a href="#">로그아웃</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="tabs">
+        <button
+          class="tab-link active"
+          onclick="openTab(event, 'user-management')"
+        >
+          회원 관리
+        </button>
+        <button class="tab-link" onclick="openTab(event, 'post-management')">
+          전체 게시글 관리
+        </button>
+      </div>
+
+      <div id="user-management" class="tab-content active">
+        <div class="top-control">
+          <div class="total-count">가입된 회원: <strong>150</strong>명</div>
+          <div class="search-box">
+            <input type="text" placeholder="유저명 검색" />
+            <button class="btn-login" style="margin-top: 0; padding: 8px 15px">
+              검색
+            </button>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>유저번호</th>
+              <th>이름</th>
+              <th>이메일</th>
+              <th>권한</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>102</td>
+              <td>김철수</td>
+              <td>chulsoo@example.com</td>
+              <td><span class="status-badge status-user">일반유저</span></td>
+              <td><button class="btn-action">강제탈퇴</button></td>
+            </tr>
+            <tr>
+              <td>45</td>
+              <td>이영희</td>
+              <td>young@example.com</td>
+              <td><span class="status-badge status-admin">관리자</span></td>
+              <td><button class="btn-action">강제탈퇴</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <a href="#" class="active">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+        </div>
+      </div>
+
+      <div id="post-management" class="tab-content">
+        <div class="top-control">
+          <div class="total-count">전체 게시물: <strong>1,240</strong>개</div>
+          <div class="search-box">
+            <input type="text" placeholder="게시글 제목 검색" />
+            <button class="btn-login" style="margin-top: 0; padding: 8px 15px">
+              검색
+            </button>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>날짜</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1240</td>
+              <td class="title-column">불법 광고 관련 확인 요청 건</td>
+              <td>spammer01</td>
+              <td>2024-05-21</td>
+              <td>
+                <button class="btn-action" onclick="location.href='view.html'">
+                  내용보기
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>1239</td>
+              <td class="title-column">
+                <span class="secret-tag">[비밀글]</span> 환불 문의합니다.
+              </td>
+              <td>사용자A</td>
+              <td>2024-05-21</td>
+              <td>
+                <button class="btn-action" onclick="location.href='view.html'">
+                  내용보기
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <a href="#">&laquo;</a>
+          <a href="#" class="active">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#">&raquo;</a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function openTab(evt, tabName) {
+        const tabContents = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabContents.length; i++) {
+          tabContents[i].style.display = "none";
+        }
+        const tabLinks = document.getElementsByClassName("tab-link");
+        for (let i = 0; i < tabLinks.length; i++) {
+          tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+    </script>
+  </body>
+</html>
