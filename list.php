@@ -1,124 +1,92 @@
-     <div class="admin-menu">
-      <strong>Master</strong>님 반갑습니다. (권한: 최고관리자)
-    </div>
+<?php
 
-   
-   <div class="top-control">
-      <div class="search-box">
-        <select>
-          <option>제목</option>
-          <option>내용</option>
-          <option>작성자</option>
-        </select>
-        <input type="text" placeholder="검색어를 입력하세요" />
-        <button type="button">검색</button>
-      </div>
-      <a href="?page=write" class="btn-write">새 글 쓰기</a>
-    </div>
-  <table>
-      <thead>
+require_once "./db.php";
+mysqli_set_charset($conn, "utf8mb4");
+
+// 1. 페이지 설정
+$list_size = 10; // 한 페이지에 보여줄 게시글 수
+$page = isset($_GET['p']) ? (int)$_GET['p'] : 1; // 현재 페이지 번호
+if ($page < 1) $page = 1;
+
+$offset = ($page - 1) * $list_size; // SQL 시작 위치 계산
+
+// 2. 전체 게시글 수 조회
+$total_sql = "SELECT COUNT(*) AS cnt FROM posts";
+$total_res = mysqli_query($conn, $total_sql);
+$total_row = mysqli_fetch_assoc($total_res);
+$total_posts = $total_row['cnt'];
+$total_pages = ceil($total_posts / $list_size); // 전체 페이지 수 계산
+
+// 3. 현재 페이지에 해당하는 데이터만 조회
+$sql = "SELECT p.*, u.name AS author_name 
+        FROM posts p 
+        LEFT JOIN users u ON p.user_id = u.id 
+        ORDER BY p.id DESC 
+        LIMIT $offset, $list_size";
+$res = mysqli_query($conn, $sql);
+?>
+
+<div class="admin-menu">
+  <?php
+  if(!isset($_SESSION["username"])){
+    echo "안녕하세요 방문해 주셔서 감사합니다. 로그인 해주세요.";
+  } else {
+    echo "<strong>{$_SESSION['username']}</strong>님 반갑습니다. (권한: {$_SESSION['role']})";
+  }
+  ?>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성자</th>
+      <th>날짜</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    if(mysqli_num_rows($res) > 0) {
+      while($row = mysqli_fetch_assoc($res)) {
+        $is_secret = $row['is_secret'] == 1;
+        $view_link = $is_secret ? "password.php?id={$row['id']}" : "?page=view&id={$row['id']}";
+        $date = date("Y-m-d", strtotime($row['created_at']));
+        ?>
         <tr>
-          <th>번호</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>날짜</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>10</td>
+          <td><?php echo $row['id']; ?></td>
           <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td class="title-column">
-            <a href="password.php">
-              <span class="secret-tag">[비밀글]</span> 문의사항 확인
-              부탁드립니다.
+            <a href="<?php echo $view_link; ?>">
+              <?php if($is_secret): ?>
+                <span class="secret-tag">[비밀글]</span>
+              <?php endif; ?>
+              <?php echo htmlspecialchars($row['title']); ?>
             </a>
           </td>
-          <td>사용자D</td>
-          <td>2024-05-21</td>
+          <td><?php echo htmlspecialchars($row['author_name'] ?? '알 수 없음'); ?></td>
+          <td><?php echo $date; ?></td>
         </tr>
-        <tr>
-          <td>3</td>
-          <td class="title-column">
-            <a href="?page=view">오늘 점심 메뉴 추천받습니다.</a>
-          </td>
-          <td>작성자A</td>
-          <td>2024-05-20</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td class="title-column">
-            <a href="password.php">
-              <span class="secret-tag">[비밀글]</span> 개인적인 문의사항입니다.
-            </a>
-          </td>
-          <td>작성자B</td>
-          <td>2024-05-19</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td class="title-column">
-            <a href="?page=view">공지사항입니다. 필독해주세요.</a>
-          </td>
-          <td>관리자</td>
-          <td>2024-05-18</td>
-        </tr>
-      </tbody>
-    </table>
+        <?php
+      }
+    } else {
+      echo "<tr><td colspan='4' style='text-align:center;'>게시글이 없습니다.</td></tr>";
+    }
+    ?>
+  </tbody>
+</table>
 
-    <div class="pagination">
-      <a href="#">&laquo;</a>
-      <a href="#" class="active">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">&raquo;</a>
-    </div>
+<div class="pagination">
+  <?php if($page > 1): ?>
+    <a href="?page=list&p=<?php echo $page-1; ?>">&laquo;</a>
+  <?php endif; ?>
+
+  <?php for($i=1; $i<=$total_pages; $i++): ?>
+    <a href="?page=list&p=<?php echo $i; ?>" class="<?php echo ($page == $i) ? 'active' : ''; ?>">
+      <?php echo $i; ?>
+    </a>
+  <?php endfor; ?>
+
+  <?php if($page < $total_pages): ?>
+    <a href="?page=list&p=<?php echo $page+1; ?>">&raquo;</a>
+  <?php endif; ?>
+</div>

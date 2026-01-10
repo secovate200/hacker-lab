@@ -1,13 +1,13 @@
 
     <main class="login-container">
       <h2>로그인</h2>
-      <form action="index.html" method="POST">
+      <form action="./proc/login_proc.php" method="POST">
         <div class="form-group">
           <label for="username">아이디</label>
           <input
             type="text"
-            id="username"
-            name="username"
+            id="email"
+            name="email"
             placeholder="아이디를 입력하세요"
             required
           />

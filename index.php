@@ -1,5 +1,6 @@
 
 <?php
+  require_once "db.php";
   require_once "./layout/header.php";
   $page=$_GET["page"]?? "list";
   
