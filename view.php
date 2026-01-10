@@ -1,26 +1,50 @@
+<?php
+require_once "./db.php";
+mysqli_set_charset($conn, "utf8mb4");
+$postId= isset($_GET['id']) ? (int)$_GET['id']:0;// id가 존재하는지 알아본다.
+?>
 <main>
+ <?php
+ if($postId !=0){
+  $sql= "SELECT p.*, u.name AS author_name 
+            FROM posts p 
+            LEFT JOIN users u ON p.user_id = u.id 
+            WHERE p.id = $postId";
+  $res =mysqli_query($conn,$sql);
+  $post= mysqli_fetch_assoc($res);
+  // 게시글이 존재하지 않을 경우 처리
+    if (!$post) {
+        echo "<script>alert('존재하지 않는 게시글입니다.'); history.back();</script>";
+        exit;
+    }
+ }else {
+    echo "<script>alert('잘못된 접근입니다.'); location.href='?page=list';</script>";
+    exit;
+}
+
+ $date = date("Y-m-d", strtotime($post['created_at'])); // 날짜 형식을 맞춘다.
+ ?>
   <div class="view-container">
     <div class="view-header">
-      <h2>게시판 업그레이드 안내 및 파일 첨부 테스트</h2>
+      <h2><?= $post['title']?></h2>
+      
       <div class="post-info">
-        <span><strong>작성자:</strong> 관리자</span>
-        <span><strong>날짜:</strong> 2024-05-21</span>
-        <span><strong>조회수:</strong> 342</span>
+        <span><strong>작성자:</strong><?=$post['author_name']?></span>
+        <span><strong>날짜:</strong> <?=$date?></span>
       </div>
     </div>
-
+<?php if(!empty($post['file_name'])){?>
     <div class="file-section">
       <strong>첨부파일</strong>
-      <a href="./files/guide.pdf" download class="file-link"
-        >이용안내_가이드라인.pdf</a
+      <a href="<?= $post['file_path'] ?>" download class="file-link"
+        ><?=$post['file_name']?></a
       >
     </div>
-
+<?php } ?>
     <div class="view-content">
-      안녕하세요. 자유 게시판입니다. 본 게시물은 파일 업로드 및 다운로드 기능을
-      테스트하기 위한 샘플입니다. 상단의 첨부파일 링크를 클릭하면 파일을
-      다운로드할 수 있습니다. 수정이나 삭제를 원하실 경우 하단의 버튼을 이용해
-      주세요. 작성 시 설정한 비밀번호 확인 절차가 진행됩니다.
+      <?= $post['content'];
+      
+      ?>
     </div>
   </div>
 
