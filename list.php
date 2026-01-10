@@ -35,7 +35,22 @@ $res = mysqli_query($conn, $sql);
   }
   ?>
 </div>
-
+<div class="top-control">
+      <div class="search-box">
+        <select>
+          <option>제목</option>
+          <option>내용</option>
+          <option>작성자</option>
+        </select>
+        <input type="text" placeholder="검색어를 입력하세요" />
+        <button type="button">검색</button>
+      </div>
+      <?php
+      if(isset($_SESSION['username'])) {
+      ?>
+      <a href="?page=write" class="btn-write">새 글 쓰기</a>
+      <?php }?>
+    </div>
 <table>
   <thead>
     <tr>
