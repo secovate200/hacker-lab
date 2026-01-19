@@ -1,124 +1,81 @@
-     <div class="admin-menu">
-      <strong>Master</strong>님 반갑습니다. (권한: 최고관리자)
-    </div>
+<?php
+require_once "conn.php";
 
-   
-   <div class="top-control">
-      <div class="search-box">
-        <select>
-          <option>제목</option>
-          <option>내용</option>
-          <option>작성자</option>
-        </select>
-        <input type="text" placeholder="검색어를 입력하세요" />
-        <button type="button">검색</button>
-      </div>
-      <a href="?page=write" class="btn-write">새 글 쓰기</a>
-    </div>
-  <table>
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>날짜</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>10</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td class="title-column">
-            <a href="?page=view">일반 게시글 예시입니다.</a>
-          </td>
-          <td>사용자C</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td class="title-column">
-            <a href="password.php">
-              <span class="secret-tag">[비밀글]</span> 문의사항 확인
-              부탁드립니다.
-            </a>
-          </td>
-          <td>사용자D</td>
-          <td>2024-05-21</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td class="title-column">
-            <a href="?page=view">오늘 점심 메뉴 추천받습니다.</a>
-          </td>
-          <td>작성자A</td>
-          <td>2024-05-20</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td class="title-column">
-            <a href="password.php">
-              <span class="secret-tag">[비밀글]</span> 개인적인 문의사항입니다.
-            </a>
-          </td>
-          <td>작성자B</td>
-          <td>2024-05-19</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td class="title-column">
-            <a href="?page=view">공지사항입니다. 필독해주세요.</a>
-          </td>
-          <td>관리자</td>
-          <td>2024-05-18</td>
-        </tr>
-      </tbody>
-    </table>
+// 1. 페이지네이션 설정
+$list_size = 10; // 한 페이지에 보여줄 게시글 수
+$page_num = isset($_GET['p']) ? (int)$_GET['p'] : 1; // 현재 페이지 번호
+$offset = ($page_num - 1) * $list_size; // 데이터를 가져올 시작 지점
 
-    <div class="pagination">
-      <a href="#">&laquo;</a>
-      <a href="#" class="active">1</a>
-      <a href="#">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">5</a>
-      <a href="#">&raquo;</a>
-    </div>
+// 2. 전체 게시글 수 조회
+$total_sql = "SELECT COUNT(*) AS cnt FROM board";
+$total_res = mysqli_query($conn, $total_sql);
+$total_row = mysqli_fetch_assoc($total_res);
+$total_posts = $total_row['cnt'];
+$total_pages = ceil($total_posts / $list_size); // 전체 페이지 수
+
+// 3. 현재 페이지에 해당하는 데이터만 가져오기
+$sql = "SELECT * FROM board ORDER BY idx DESC LIMIT $offset, $list_size";
+$result = mysqli_query($conn, $sql);
+?>
+
+<div class="admin-menu">
+    <?php if (isset($_SESSION['username'])): ?>
+        <strong><?= $_SESSION['username'] ?></strong>님 반갑습니다. 
+        (권한: <?= $_SESSION['role'] ?>)
+    <?php else: ?>
+        로그인이 필요합니다. <a href="?page=login" style="color: #00ffcc; text-decoration: underline;">로그인 하러 가기</a>
+    <?php endif; ?>
+</div>
+
+<div class="top-control">
+    <div class="search-box">
+        </div>
+    <a href="?page=write" class="btn-write">새 글 쓰기</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (mysqli_num_rows($result) > 0): ?>
+            <?php while($row = mysqli_fetch_assoc($result)): ?>
+                <tr>
+                    <td><?= $row['idx'] ?></td>
+                    <td class="title-column">
+                        <?php 
+                        $link = ($row['is_secret'] == 1) ? "password.php?idx=".$row['idx'] : "?page=view&idx=".$row['idx'];
+                        ?>
+                        <a href="<?= $link ?>">
+                            <?= ($row['is_secret'] == 1) ? "<span class='secret-tag'>[비밀글]</span> " : "" ?>
+                            <?= htmlspecialchars($row['title']) ?>
+                        </a>
+                    </td>
+                    <td><?= htmlspecialchars($row['author']) ?></td>
+                    <td><?= date("Y-m-d", strtotime($row['reg_date'])) ?></td>
+                </tr>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <tr><td colspan="4">게시글이 없습니다.</td></tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <?php if($page_num > 1): ?>
+        <a href="?page=list&p=<?= $page_num - 1 ?>">&laquo;</a>
+    <?php endif; ?>
+
+    <?php for($i = 1; $i <= $total_pages; $i++): ?>
+        <a href="?page=list&p=<?= $i ?>" class="<?= ($i == $page_num) ? 'active' : '' ?>"><?= $i ?></a>
+    <?php endfor; ?>
+
+    <?php if($page_num < $total_pages): ?>
+        <a href="?page=list&p=<?= $page_num + 1 ?>">&raquo;</a>
+    <?php endif; ?>
+</div>

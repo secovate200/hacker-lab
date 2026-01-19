@@ -1,7 +1,26 @@
+<?php
+require_once "conn.php";
+if (isset($_POST["username"], $_POST["password"])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $sql="select * from users where username='$username'and password='$password'";
+    $result= mysqli_query($conn,$sql);
+    if(mysqli_num_rows($result) !=0){
+      $user=mysqli_fetch_assoc($result);
+      $_SESSION['user_idx'] = $user['idx'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['role'] = $user['role'];
+        echo "<script>alert('".$user['username']."님, 환영합니다!'); location.href='index.php';</script>";
+    }else {
+        echo "<script>alert('로그인 정보가 올바르지 않습니다.'); history.back();</script>";
+    }
+}
 
+?>
     <main class="login-container">
       <h2>로그인</h2>
-      <form action="index.html" method="POST">
+      <form action="login.php" method="POST">
         <div class="form-group">
           <label for="username">아이디</label>
           <input

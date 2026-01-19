@@ -1,6 +1,8 @@
 
 <?php
+  session_start();
   require_once "./layout/header.php";
+
   $page=$_GET["page"]?? "list";
   
     switch($page){
